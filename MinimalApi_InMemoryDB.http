@@ -1,0 +1,6 @@
+@MinimalApi_InMemoryDB_HostAddress = http://localhost:5236
+
+GET {{MinimalApi_InMemoryDB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
