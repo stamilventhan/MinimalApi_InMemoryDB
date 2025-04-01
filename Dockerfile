@@ -18,6 +18,9 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./MinimalApi_InMemoryDB.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Ensure ASPNETCORE_ENVIRONMENT is set to Production
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

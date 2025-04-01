@@ -13,11 +13,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())  // Ensure it's enabled in production
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = string.Empty; // This makes Swagger available at the root URL
+    });
 }
 
 app.UseHttpsRedirection();
@@ -49,6 +52,7 @@ app.MapDelete("/Users/{id}", async (int id, UserDbContext db) =>
     }
 }).WithName("deleteUser").WithOpenApi();
 
+//app.MapControllers();
 app.Run();
 
 public class UserDbContext : DbContext
